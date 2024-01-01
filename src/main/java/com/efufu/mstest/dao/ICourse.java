@@ -10,7 +10,7 @@ import java.util.List;
 public interface ICourse {
     @Select("select * from course")
     @Results(id = "courses",value = {
-            @Result(column = "id" ,property = "id",id = true),
+            @Result(column = "id" ,property = "id"),
             @Result(column = "name",property = "name")
     })
     public List<Course> find();
