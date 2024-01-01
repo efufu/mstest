@@ -25,7 +25,7 @@ public class SessionUtil {
             e.printStackTrace();
         }
     }
-    public void destory(){
+    public void destroy(){
         if(session!=null){
             session.close();
         }
@@ -36,7 +36,6 @@ public class SessionUtil {
             return session;
         }
         return null;
-
     }
 
 }
