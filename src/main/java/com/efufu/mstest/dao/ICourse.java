@@ -16,8 +16,8 @@ public interface ICourse {
     @Insert("insert into course(id,sid,name) values (#{id},#{sid},#{name})")
     void add(@Param("id") int id,@Param("sid") int sid,@Param("name") String name);
 
-    @Update("UPDATE course SET name = #{name} WHERE id = #{id}")
-    void update(Course course);
+    @Update("update course set sid=#{sid},name = #{name} where id = #{id}")
+    void update(Course course,@Param("sid") int sid);
 
     @Delete("DELETE FROM course WHERE id = #{id}")
     void delete(int id);

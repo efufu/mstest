@@ -6,6 +6,7 @@ import com.efufu.mstest.service.SessionUtil;
 import com.efufu.mstest.vo.Course;
 import com.efufu.mstest.vo.Student;
 import com.google.gson.Gson;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,12 +48,17 @@ public class MyController {
 
     @RequestMapping(value = "update", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String updateStudent(@RequestBody String json) {
+    public String updateStudent(@Param("id") int id, @RequestBody String json) {
         // 解析 JSON 数据并更新学生
         Student student = new Gson().fromJson(json, Student.class);
         SessionUtil sessionUtil = new SessionUtil();
         IStudent iStudent = sessionUtil.getIStudent();
-        iStudent.update(student);
+        ICourse iCourse= sessionUtil.getICourse();
+        iStudent.update(student,id);
+        List<Course> courses = student.getCourses();
+        for (Course course : courses) {
+            iCourse.update(course, student.getId());
+        }
         sessionUtil.destroy();
         return "更新成功";
     }
