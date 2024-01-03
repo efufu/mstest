@@ -1,5 +1,6 @@
 package com.efufu.mstest.service;
 
+import com.efufu.mstest.dao.ICourse;
 import com.efufu.mstest.dao.IStudent;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -40,6 +41,10 @@ public class SessionUtil {
 
     public IStudent getIStudent(){
         return getSession().getMapper(IStudent.class);
+    }
+
+    public ICourse getICourse(){
+        return getSession().getMapper(ICourse.class);
     }
 
 }

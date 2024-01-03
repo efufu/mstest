@@ -23,5 +23,12 @@ public interface IStudent {
     })
     public List<Student> find();
 
+    @Insert("insert into student(id,name) values (#{id},#{name})")
+    void add(Student student);
 
+    @Update("UPDATE student SET name = #{name} WHERE id = #{id}")
+    void update(Student student);
+
+    @Delete("DELETE FROM student WHERE id = #{id}")
+    void delete(int id);
 }
