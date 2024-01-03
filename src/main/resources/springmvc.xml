@@ -14,4 +14,22 @@
     <!-- 注解驱动 -->
     <mvc:annotation-driven/>
 
+    <mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
+
+    <!-- 声明用于文件上传的 MultipartResovler解析器
+            主要的作用：用于接受二进制的文件内容
+    -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="20971520"></property>
+
+    </bean>
+
+    <!-- 异常解析器 -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error.jsp</prop>
+            </props>
+        </property>
+    </bean>
 </beans>

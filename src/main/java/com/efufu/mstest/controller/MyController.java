@@ -1,10 +1,7 @@
 package com.efufu.mstest.controller;
 
-import com.efufu.mstest.dao.ICourse;
-import com.efufu.mstest.dao.IStudent;
 import com.efufu.mstest.service.SessionUtil;
-import com.efufu.mstest.vo.Course;
-import com.efufu.mstest.vo.Student;
+import com.efufu.mstest.vo.User;
 import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
@@ -12,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MyController {
@@ -21,67 +17,39 @@ public class MyController {
     @RequestMapping(value = "find", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String find() {
-        SessionUtil sessionUtil = new SessionUtil();
-        IStudent iStudent = sessionUtil.getIStudent();
-        List<Student> students = iStudent.find();
-        sessionUtil.destroy();
-        return new Gson().toJson(students);
+
+        return new Gson().toJson(null);
     }
 
     @RequestMapping(value = "add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String addStudent(@RequestBody String json) {
-        // 解析 JSON 数据并添加学生
-        Student student = new Gson().fromJson(json, Student.class);
-        SessionUtil sessionUtil = new SessionUtil();
-        IStudent iStudent = sessionUtil.getIStudent();
-        ICourse iCourse = sessionUtil.getICourse();
-        iStudent.add(student);
-        List<Course> courses = student.getCourses();
-        for (Course course : courses) {
-            iCourse.add(course.getId(), student.getId(),course.getName());
-        }
+    public String addStudent(String name,String sex,String msg,String grade,MultipartFile file) {
 
-        sessionUtil.destroy();
-        return "添加成功";
+        User user=new User(name,sex,msg,grade,file.getOriginalFilename());
+        System.out.println(name);
+        System.out.println(sex);
+        System.out.println(msg);
+        System.out.println(grade);
+        System.out.println(file.getOriginalFilename());
+
+        return new Gson().toJson(user);
     }
 
     @RequestMapping(value = "update", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String updateStudent(@Param("id") int id, @RequestBody String json) {
         // 解析 JSON 数据并更新学生
-        Student student = new Gson().fromJson(json, Student.class);
-        SessionUtil sessionUtil = new SessionUtil();
-        IStudent iStudent = sessionUtil.getIStudent();
-        ICourse iCourse= sessionUtil.getICourse();
-        iStudent.update(student,id);
-        List<Course> courses = student.getCourses();
-        for (Course course : courses) {
-            iCourse.update(course, student.getId());
-        }
-        sessionUtil.destroy();
+
         return "更新成功";
     }
 
-    @RequestMapping(value = "delete", produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public String deleteStudent(@RequestBody String json) {
-        // 解析 JSON 数据并删除学生
-        Student student = new Gson().fromJson(json, Student.class);
-        SessionUtil sessionUtil = new SessionUtil();
-        IStudent iStudent = sessionUtil.getIStudent();
-        iStudent.delete(student.getId());
-        sessionUtil.destroy();
-        return "删除成功";
-    }
 
     @RequestMapping(value = "findById", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String findStudentById(@RequestParam int id) {
         SessionUtil sessionUtil = new SessionUtil();
-        IStudent iStudent = sessionUtil.getIStudent();
-        Student student = iStudent.findById(id);
+
         sessionUtil.destroy();
-        return new Gson().toJson(student);
+        return null;
     }
 }
