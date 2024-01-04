@@ -77,7 +77,6 @@
         </thead>
         <tbody>
         <tr v-for="result in resultForm" :key="result.name" align="center">
-            <%--        <tr align="center">--%>
             <td>{{ result.name }}</td>
             <td>{{ result.sex }}</td>
             <td>
