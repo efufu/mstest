@@ -1,9 +1,11 @@
 package com.efufu.mstest.vo;
 
+import java.util.List;
+
 public class User {
     String name;
     String sex;
-    String msg;
+    List<String> msg;
     String grade;
     String filename;
 
@@ -15,7 +17,7 @@ public class User {
         return "User{" +
                 "name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
-                ", msg='" + msg + '\'' +
+                ", msg=" + msg +
                 ", grade='" + grade + '\'' +
                 ", filename='" + filename + '\'' +
                 '}';
@@ -37,11 +39,11 @@ public class User {
         this.sex = sex;
     }
 
-    public String getMsg() {
+    public List<String> getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public void setMsg(List<String> msg) {
         this.msg = msg;
     }
 
@@ -61,7 +63,7 @@ public class User {
         this.filename = filename;
     }
 
-    public User(String name, String sex, String msg, String grade, String filename) {
+    public User(String name, String sex, List<String> msg, String grade, String filename) {
         this.name = name;
         this.sex = sex;
         this.msg = msg;

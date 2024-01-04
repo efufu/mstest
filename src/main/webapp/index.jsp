@@ -47,7 +47,8 @@
         <br>
 
         <label for="fileInput">file：</label>
-        <input type="file" id="fileInput" ref="fileInput" accept="image/png,image/jpeg,image/gif" @change="handleFileUpload"/>
+        <input type="file" id="fileInput" ref="fileInput" accept="image/png,image/jpeg,image/gif"
+               @change="handleFileUpload"/>
 
 
         <br>
@@ -56,40 +57,41 @@
         <button type="button" @click="update">更新</button>
     </form>
 
-<%--    <!-- 查询表单 -->--%>
-<%--    <form @submit.prevent="searchStudents">--%>
-<%--        <label for="search">查询学生：</label>--%>
-<%--        <input v-model="searchId" placeholder="输入ID">--%>
-<%--        <button type="submit">查询</button>--%>
-<%--    </form>--%>
+    <%--    <!-- 查询表单 -->--%>
+    <%--    <form @submit.prevent="searchStudents">--%>
+    <%--        <label for="search">查询学生：</label>--%>
+    <%--        <input v-model="searchId" placeholder="输入ID">--%>
+    <%--        <button type="submit">查询</button>--%>
+    <%--    </form>--%>
 
-<%--    <br>--%>
-<%--    <!-- 学生表格 -->--%>
-<%--    <table v-if="students.length > 0">--%>
-<%--        <thead>--%>
-<%--        <tr>--%>
-<%--            <th>学生ID</th>--%>
-<%--            <th>学生姓名</th>--%>
-<%--            <th>课程信息</th>--%>
-<%--            <th>操作</th>--%>
-<%--        </tr>--%>
-<%--        </thead>--%>
-<%--        <tbody>--%>
-<%--        <tr v-for="student in students" :key="student.id">--%>
-<%--            <td>{{ student.id }}</td>--%>
-<%--            <td>{{ student.name }}</td>--%>
-<%--            <td>--%>
-<%--                <div v-for="(course, index) in student.courses" :key="index">--%>
-<%--                    {{ course.id }} - {{ course.name }}--%>
-<%--                </div>--%>
-<%--            </td>--%>
-<%--            <td>--%>
-<%--                <button @click="editStudent(student)">编辑</button>--%>
-<%--                <button @click="deleteStudent(student.id)">删除</button>--%>
-<%--            </td>--%>
-<%--        </tr>--%>
-<%--        </tbody>--%>
-<%--    </table>--%>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>sex</th>
+            <th>msg</th>
+            <th>grade</th>
+            <th>file</th>
+            <th>operator</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="result in resultForm" :key="result.name" align="center">
+            <%--        <tr align="center">--%>
+            <td>{{ result.name }}</td>
+            <td>{{ result.sex }}</td>
+            <td>
+                <span v-for="(message,index) in result.msg" :key="index">
+                    {{ message }}<span v-if="index < result.msg.length - 1">,</span>
+                </span>
+            </td>
+            <td>{{ result.grade }}</td>
+            <td>{{ result.filename }}</td>
+            <td>修改</td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
 <script>
@@ -102,9 +104,10 @@
                     name: 'fufu',
                     sex: 'boy',
                     msg: ref([]),
-                    grade:'1',
+                    grade: '1',
                     file: null  // 存储上传的头像文件
-                }
+                },
+                resultForm: []
             };
         },
         methods: {
@@ -116,16 +119,19 @@
                 formData.append('name', this.form.name);
                 formData.append('sex', this.form.sex);
                 formData.append('msg', this.form.msg);
-                formData.append('grade',this.form.grade)
+                formData.append('grade', this.form.grade)
                 formData.append('file', this.form.file);
 
                 axios.post('add', formData)
-                    .then(response => {
-                        console.log('上传成功:', response.data);
+                    .then(res => {
+                        this.resultForm = [res.data];
                     })
-                    .catch(error => {
-                        console.error('上传错误:', error);
-                    });
+            },
+            find() {
+                axios.get('find')
+                    .then(res => {
+                        this.resultForm = [res.data];
+                    })
             }
         }
     });
