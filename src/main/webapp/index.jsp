@@ -47,7 +47,7 @@
         <br>
 
         <label for="fileInput">file：</label>
-        <input type="file" id="fileInput" ref="fileInput" accept="image/png,image/jpeg,image/gif"
+        <input type="file" id="fileInput" ref="fileInput" accept="image/png,.jpg,image/gif"
                @change="handleFileUpload"/>
 
 
@@ -55,14 +55,8 @@
 
         <button type="button" @click="add">添加</button>
         <button type="button" @click="update">更新</button>
+        <button type="button" @click="find">查询</button>
     </form>
-
-    <%--    <!-- 查询表单 -->--%>
-    <%--    <form @submit.prevent="searchStudents">--%>
-    <%--        <label for="search">查询学生：</label>--%>
-    <%--        <input v-model="searchId" placeholder="输入ID">--%>
-    <%--        <button type="submit">查询</button>--%>
-    <%--    </form>--%>
 
     <table border="1">
         <thead>
@@ -87,12 +81,14 @@
             </td>
             <td>{{ result.grade }}</td>
             <td>
-                <span v-for="(file,index) in result.filename.split(',')" :key="index">
-                    {{ file }}
-                    <br v-if="index < result.filename.split(',').length">
+                <span v-for="(file, index) in result.filename.split(',')" :key="index">
+                     {{ file }} --
+                     {{ result.filepath.split(',')[index] }}<br v-if="index < result.filename.split(',').length">
                 </span>
             </td>
-            <td>修改</td>
+            <td>
+                <button type="button" @Click="edit(result)">修改</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -107,10 +103,11 @@
             return {
                 form: {
                     name: 'fufu',
-                    sex: 'boy',
-                    msg: ref([]),
+                    sex: '男',
+                    msg: ref(['msg1']),
                     grade: '1',
-                    file: null
+                    file: null,
+                    isEdit: false
                 },
                 resultForm: []
             };
@@ -129,14 +126,37 @@
 
                 axios.post('add', formData)
                     .then(res => {
-                        this.resultForm = [res.data];
+                        alert(res.data);
                     })
             },
             find() {
                 axios.get('find')
                     .then(res => {
-                        this.resultForm = [res.data];
+                        this.resultForm = res.data;
                     })
+            },
+            update() {
+                const formData = new FormData();
+                formData.append('name', this.form.name);
+                formData.append('sex', this.form.sex);
+                formData.append('msg', this.form.msg);
+                formData.append('grade', this.form.grade)
+                formData.append('file', this.form.file);
+
+                axios.post('update', formData)
+                    .then(res => {
+                        this.form.isEditing = false;
+                        alert(res.data);
+                    })
+            },
+            edit(result) {
+                // 将当前行的数据加载到表单中
+                this.form.name = result.name;
+                this.form.sex = result.sex;
+                this.form.msg = result.msg.split(',');
+                this.form.grade = result.grade;
+                this.form.file = result.filename; // 如果需要编辑文件，可能需要另外的逻辑
+                this.form.isEditing = true; // 设置编辑状态为 true
             }
         }
     });

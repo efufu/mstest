@@ -1,7 +1,5 @@
 package com.efufu.mstest.vo;
 
-import java.util.List;
-
 public class User {
     String name;
     String sex;

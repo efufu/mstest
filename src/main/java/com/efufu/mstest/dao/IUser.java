@@ -1,14 +1,19 @@
 package com.efufu.mstest.dao;
 
 import com.efufu.mstest.vo.User;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public interface IUser {
     @Select("select * from user")
     public List<User> find();
+
+    @Select("select * from user where name=#{name}")
+    public User findName(@Param("name")String name);
 
     @Insert("insert into user values (#{name},#{sex},#{msg},#{grade},#{filename},#{filepath})")
     public void add(User user);
