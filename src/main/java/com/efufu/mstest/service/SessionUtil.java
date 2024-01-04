@@ -1,5 +1,6 @@
 package com.efufu.mstest.service;
 
+import com.efufu.mstest.dao.IUser;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -37,12 +38,9 @@ public class SessionUtil {
     }
 
 
-    public void getIStudent(){
-        return ;
+    public IUser getIUser(){
+        return getSession().getMapper(IUser.class);
     }
 
-    public void getICourse(){
-        return ;
-    }
 
 }

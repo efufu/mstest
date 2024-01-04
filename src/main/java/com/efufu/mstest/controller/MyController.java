@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,8 +26,8 @@ public class MyController {
     @ResponseBody
     public String add(String name, String sex, String msg, String grade, MultipartFile file) {
 
-        List<String> list= List.of(msg.split(","));
-        User user=new User(name,sex, list,grade,file.getOriginalFilename());
+
+        User user = new User(name, sex, msg, grade, file.getOriginalFilename(),"adb");
         System.out.println(name);
         System.out.println(sex);
         System.out.println(msg);

@@ -5,22 +5,22 @@ import java.util.List;
 public class User {
     String name;
     String sex;
-    List<String> msg;
+    String msg;
     String grade;
     String filename;
+    String filepath;
 
     public User() {
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", msg=" + msg +
-                ", grade='" + grade + '\'' +
-                ", filename='" + filename + '\'' +
-                '}';
+
+    public User(String name, String sex, String msg, String grade, String filename, String filepath) {
+        this.name = name;
+        this.sex = sex;
+        this.msg = msg;
+        this.grade = grade;
+        this.filename = filename;
+        this.filepath = filepath;
     }
 
     public String getName() {
@@ -39,11 +39,11 @@ public class User {
         this.sex = sex;
     }
 
-    public List<String> getMsg() {
+    public String getMsg() {
         return msg;
     }
 
-    public void setMsg(List<String> msg) {
+    public void setMsg(String msg) {
         this.msg = msg;
     }
 
@@ -63,11 +63,23 @@ public class User {
         this.filename = filename;
     }
 
-    public User(String name, String sex, List<String> msg, String grade, String filename) {
-        this.name = name;
-        this.sex = sex;
-        this.msg = msg;
-        this.grade = grade;
-        this.filename = filename;
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", msg='" + msg + '\'' +
+                ", grade='" + grade + '\'' +
+                ", filename='" + filename + '\'' +
+                ", filepath='" + filepath + '\'' +
+                '}';
     }
 }

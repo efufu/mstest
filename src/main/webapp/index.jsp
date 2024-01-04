@@ -18,9 +18,9 @@
 
         <!-- 单选按钮 -->
         <label>sex:</label>
-        <input type="radio" id="boy" value="boy" checked v-model="form.sex"/>
+        <input type="radio" id="boy" value="男" checked v-model="form.sex"/>
         <label for="boy">男</label>
-        <input type="radio" id="girl" value="girl" v-model="form.sex"/>
+        <input type="radio" id="girl" value="女" v-model="form.sex"/>
         <label for="girl">女</label>
 
         <br>
@@ -71,7 +71,7 @@
             <th>sex</th>
             <th>msg</th>
             <th>grade</th>
-            <th>file</th>
+            <th>files</th>
             <th>operator</th>
         </tr>
         </thead>
@@ -80,12 +80,18 @@
             <td>{{ result.name }}</td>
             <td>{{ result.sex }}</td>
             <td>
-                <span v-for="(message,index) in result.msg" :key="index">
-                    {{ message }}<span v-if="index < result.msg.length - 1">,</span>
+                <span v-for="(message,index) in result.msg.split(',')" :key="index">
+                    {{ message }}
+                    <br v-if="index < result.msg.split(',').length">
                 </span>
             </td>
             <td>{{ result.grade }}</td>
-            <td>{{ result.filename }}</td>
+            <td>
+                <span v-for="(file,index) in result.filename.split(',')" :key="index">
+                    {{ file }}
+                    <br v-if="index < result.filename.split(',').length">
+                </span>
+            </td>
             <td>修改</td>
         </tr>
         </tbody>
@@ -104,7 +110,7 @@
                     sex: 'boy',
                     msg: ref([]),
                     grade: '1',
-                    file: null  // 存储上传的头像文件
+                    file: null
                 },
                 resultForm: []
             };
