@@ -23,7 +23,7 @@ public class MyController {
 
     @RequestMapping(value = "add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String addStudent(String name, String sex, String msg, String grade, MultipartFile file) {
+    public String add(String name, String sex, String msg, String grade, MultipartFile file) {
 
         List<String> list= List.of(msg.split(","));
         User user=new User(name,sex, list,grade,file.getOriginalFilename());
@@ -39,7 +39,7 @@ public class MyController {
 
     @RequestMapping(value = "update", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String updateStudent(@Param("id") int id, @RequestBody String json) {
+    public String update(@Param("id") int id, @RequestBody String json) {
         // 解析 JSON 数据并更新学生
 
         return "更新成功";
